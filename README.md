@@ -10,7 +10,7 @@ Additional information includes:
 * author GitHub avatar
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/dmy/elm-package-info/master/screenshots/browser.png" width="360" />
-  <img src="https://raw.githubusercontent.com/dmy/elm-package-info/master/screenshots/list-extra.png" width="360" />
+  <img src="https://raw.githubusercontent.com/dmy/elm-package-info/v1.2/screenshots/browser.png" width="360" />
+  <img src="https://raw.githubusercontent.com/dmy/elm-package-info/v1.2/screenshots/list-extra.png" width="360" />
 </p>
 
