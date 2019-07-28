@@ -47,6 +47,8 @@ function updatePackageInfo(pkg, elmJson) {
 
     let avatar = document.createElement("img");
     avatar.src = `https://github.com/${pkg.author}.png?size=64`;
+    avatar.setAttribute("width", "64");
+    avatar.setAttribute("height", "64");
     content.appendChild(avatar);
 
     let releaseHeader = document.createElement("h2");
@@ -161,7 +163,15 @@ const observer = new MutationObserver((mutationList, observer) => {
 });
 observer.observe(document.body, config);
 
-// Update postion on window resize
-window.onresize = () => {
-    updatePosition();
-};
+// Update postion on resize
+if (ResizeObserver) {
+    // Needed on Chrome to detect scrollbars appearing
+    const resizeObserver = new ResizeObserver(entry => {
+        updatePosition();
+    });
+    resizeObserver.observe(document.body);
+} else {
+    window.onresize = () => {
+        updatePosition();
+    };
+}
