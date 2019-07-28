@@ -109,7 +109,7 @@ function updatePosition() {
         const rect = pkgNav.getBoundingClientRect();
         info.style.left = (rect.x).toString() + "px";
         info.style.top = (rect.y + rect.height).toString() + "px";
-        // Extend to borders to hide conflicts with the footer.
+        // Extend to right border to hide conflicts with the footer.
         info.style.right = "0";
         info.style.display = "block";
     } else if (info) {
