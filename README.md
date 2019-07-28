@@ -9,6 +9,10 @@ Additional information includes:
 * release date
 * author GitHub avatar
 
+Links to extension:
+[Firefox](https://addons.mozilla.org/en-US/firefox/addon/elm-package-info/)
+[Chrome](https://chrome.google.com/webstore/detail/elm-package-info/egmipcpkalcanmhgjbmkeioigoefjkff)
+
 <p align="center">
   <img src="https://raw.githubusercontent.com/dmy/elm-package-info/v1.2/screenshots/browser.png" width="360" />
   <img src="https://raw.githubusercontent.com/dmy/elm-package-info/v1.2/screenshots/list-extra.png" width="360" />
