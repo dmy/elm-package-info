@@ -132,7 +132,7 @@ function updatePosition() {
         info.style.right = "0";
         info.style.display = "block";
     } else if (info) {
-        info.style.diplay = "none";
+        info.style.display = "none";
     }
 }
 
