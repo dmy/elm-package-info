@@ -183,7 +183,7 @@ const observer = new MutationObserver((mutationList, observer) => {
 observer.observe(document.body, config);
 
 // Update postion on resize
-if (ResizeObserver) {
+if (typeof ResizeObserver !== 'undefined') {
     // Needed on Chrome to detect scrollbars appearing
     const resizeObserver = new ResizeObserver(entry => {
         updatePosition();
