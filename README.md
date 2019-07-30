@@ -14,7 +14,6 @@ Links to extension:
 [Chrome](https://chrome.google.com/webstore/detail/elm-package-info/egmipcpkalcanmhgjbmkeioigoefjkff)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/dmy/elm-package-info/v1.2/screenshots/browser.png" width="360" />
-  <img src="https://raw.githubusercontent.com/dmy/elm-package-info/v1.2/screenshots/list-extra.png" width="360" />
+  <img src="https://raw.githubusercontent.com/dmy/elm-package-info/screenshots/list-extra_shadow.png" width="640" />
 </p>
 
