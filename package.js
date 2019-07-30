@@ -83,6 +83,7 @@ function updatePackageInfo(pkg, elmJson) {
         installHeaderTitle.textContent = "Install";
 
         const installHeader = document.createElement("h2");
+        installHeader.style.marginBottom = "0";
         const copyToClipboardIcon = createCopyToClipboardIcon();
         installHeader.appendChild(installHeaderTitle);
         installHeader.appendChild(copyToClipboardIcon);
@@ -92,7 +93,8 @@ function updatePackageInfo(pkg, elmJson) {
         const installCommand = document.createElement("pre");
         installCommand.onclick = () => copyToClipboard(installCommand, copyToClipboardIcon);
         installCommand.style.boxSizing = "content-box";
-        installCommand.style.paddingLeft = "4px";
+        installCommand.style.padding = "10px 4px"
+        installCommand.style.margin = "10px 0"
         installCommand.style.minWidth = "200px";
         if (isOldFormat(elmJson)) {
             installCommand.textContent = `elm-package install ${pkg.author}/${pkg.name}`;
