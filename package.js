@@ -243,7 +243,7 @@ function updatePosition() {
         const pkgNav = pkgNavs[0];
         const rect = pkgNav.getBoundingClientRect();
         info.style.left = (rect.x).toString() + "px";
-        info.style.top = (rect.y + rect.height).toString() + "px";
+        info.style.top = (window.scrollY + rect.y + rect.height).toString() + "px";
         info.style.display = "block";
         translateFooter();
     } else if (info) {
