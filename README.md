@@ -3,11 +3,12 @@
 A Firefox and Chrome extension to display additional information for a package when browsing package.elm-lang.org.
 
 Additional information includes:
+* author GitHub avatar
+* release date
+* license
+* install instructions with copy-to-clipboard on click
 * `elm` version supported
 * package dependencies
-* license
-* release date
-* author GitHub avatar
 
 Links to extension:
 [Firefox](https://addons.mozilla.org/en-US/firefox/addon/elm-package-info/)
