@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Elm Package Info",
-    "version": "1.2",
+    "version": "1.3",
     "description": "Display additional information for a package on package.elm-lang.org (elm version, dependencies, license, …)",
     "icons": {
         "16": "icons/elm-16.png",
