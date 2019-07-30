@@ -47,9 +47,15 @@ function updatePackageInfo(pkg, elmJson) {
 
     let avatar = document.createElement("img");
     avatar.src = `https://github.com/${pkg.author}.png?size=64`;
+    avatar.style.display = "block";
     avatar.setAttribute("width", "64");
     avatar.setAttribute("height", "64");
-    content.appendChild(avatar);
+    avatar.setAttribute("alt", `${pkg.author} GitHub profile`);
+    let profile = document.createElement("a");
+    profile.setAttribute("href", `https://github.com/${pkg.author}`);
+    profile.style.textAlign = "top";
+    profile.appendChild(avatar);
+    content.appendChild(profile);
 
     let releaseHeader = document.createElement("h2");
     releaseHeader.style.marginTop = "14px";
