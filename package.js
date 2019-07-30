@@ -63,9 +63,12 @@ function updatePackageInfo(pkg, elmJson) {
     releaseHeader.textContent = "Release";
     content.appendChild(releaseHeader);
 
-    let date = document.createElement("div");
-    date.textContent = elmJson.date;
-    content.appendChild(date);
+    let releaseDateLink = document.createElement("a");
+    releaseDateLink.setAttribute("href", `https://github.com/${pkg.author}/${pkg.name}/releases`);
+    releaseDateLink.textContent = elmJson.date;
+    let releaseDate = document.createElement("div");
+    releaseDate.appendChild(releaseDateLink);
+    content.appendChild(releaseDate);
 
     let license = document.createElement("a");
     license.setAttribute("href", `https://spdx.org/licenses/${elmJson.license}`);
