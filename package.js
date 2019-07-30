@@ -8,87 +8,86 @@ async function getElmJson(pkg) {
     }
 
     const response = await window.fetch(url);
-    let elmJson = await response.json();
+    const elmJson = await response.json();
     elmJson.date = response.headers.get("last-modified");
     return elmJson;
 }
 
 function addPackageInfo() {
-    let info = document.createElement("div");
+    const info = document.createElement("div");
     info.id = "elm-package-info";
     document.body.appendChild(info);
 }
 
 function updatePackageInfo(pkg, elmJson) {
-    let info = document.getElementById("elm-package-info");
+    const info = document.getElementById("elm-package-info");
     if (!info) { return };
 
     info.style.display = "none";
     info.style.position = "absolute";
     info.style.paddingLeft = "20px";
     info.style.borderLeft = "1px solid #eeeeee"
-    info.style.backgroundColor = "white";
 
-    let dependencies = document.createElement("div");
-    for (let [name, constraint] of Object.entries(elmJson.dependencies)) {
-        let dep = document.createElement("div");
+    const dependencies = document.createElement("div");
+    for (const [name, constraint] of Object.entries(elmJson.dependencies)) {
+        const dep = document.createElement("div");
         dep.style.whiteSpace = "nowrap";
 
-        let link = document.createElement("a");
+        const link = document.createElement("a");
         link.setAttribute("href", `/packages/${name}/latest`);
         link.textContent = name;
-        let span = document.createElement("span");
+        const span = document.createElement("span");
         span.textContent = " " + constraint;
         dep.appendChild(link);
         dep.appendChild(span);
         dependencies.appendChild(dep);
     }
-    let content = document.createElement("div");
+    const content = document.createElement("div");
 
-    let avatar = document.createElement("img");
+    const avatar = document.createElement("img");
     avatar.src = `https://github.com/${pkg.author}.png?size=64`;
     avatar.style.display = "block";
     avatar.setAttribute("width", "64");
     avatar.setAttribute("height", "64");
     avatar.setAttribute("alt", `${pkg.author} GitHub profile`);
-    let profile = document.createElement("a");
+    const profile = document.createElement("a");
     profile.setAttribute("href", `https://github.com/${pkg.author}`);
     profile.style.textAlign = "top";
     profile.appendChild(avatar);
     content.appendChild(profile);
 
-    let releaseHeader = document.createElement("h2");
+    const releaseHeader = document.createElement("h2");
     releaseHeader.style.marginTop = "14px";
     releaseHeader.style.marginBottom = "10px";
     releaseHeader.textContent = "Release";
     content.appendChild(releaseHeader);
 
-    let releaseDateLink = document.createElement("a");
+    const releaseDateLink = document.createElement("a");
     releaseDateLink.setAttribute("href", `https://github.com/${pkg.author}/${pkg.name}/releases`);
     releaseDateLink.textContent = elmJson.date;
-    let releaseDate = document.createElement("div");
+    const releaseDate = document.createElement("div");
     releaseDate.appendChild(releaseDateLink);
     content.appendChild(releaseDate);
 
-    let license = document.createElement("a");
+    const license = document.createElement("a");
     license.setAttribute("href",
         `https://raw.githubusercontent.com/${pkg.author}/${pkg.name}/${elmJson["version"]}/LICENSE`
     );
     license.textContent = elmJson.license;
     content.appendChild(license);
 
-    let depsHeader = document.createElement("h2");
+    const depsHeader = document.createElement("h2");
     depsHeader.style.marginBottom = "10px";
     depsHeader.textContent = 'Dependencies';
     content.appendChild(depsHeader);
 
-    let elmInstall = document.createElement("a");
+    const elmInstall = document.createElement("a");
     elmInstall.setAttribute("href", "https://guide.elm-lang.org/install.html");
     elmInstall.setAttribute("alt", "Install Elm");
     elmInstall.textContent = "elm";
-    let elmVersion = document.createElement("span");
+    const elmVersion = document.createElement("span");
     elmVersion.textContent =  " " + elmJson["elm-version"];
-    let elm = document.createElement("div");
+    const elm = document.createElement("div");
     elm.appendChild(elmInstall);
     elm.appendChild(elmVersion);
 
@@ -163,7 +162,7 @@ update(pkg);
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === "update") {
         const newPkg = getPackage();
-        let info = document.getElementById("elm-package-info");
+        const info = document.getElementById("elm-package-info");
         if (!newPkg) {
             if (info) {
                 info.style.display = "none";
