@@ -82,9 +82,17 @@ function updatePackageInfo(pkg, elmJson) {
     depsHeader.textContent = 'Dependencies';
     content.appendChild(depsHeader);
 
-    let elmVersion = document.createElement("div");
-    elmVersion.textContent = "elm " + elmJson["elm-version"];
-    content.appendChild(elmVersion);
+    let elmInstall = document.createElement("a");
+    elmInstall.setAttribute("href", "https://guide.elm-lang.org/install.html");
+    elmInstall.setAttribute("alt", "Install Elm");
+    elmInstall.textContent = "elm";
+    let elmVersion = document.createElement("span");
+    elmVersion.textContent =  " " + elmJson["elm-version"];
+    let elm = document.createElement("div");
+    elm.appendChild(elmInstall);
+    elm.appendChild(elmVersion);
+
+    content.appendChild(elm);
     content.appendChild(dependencies);
 
     while (info.firstChild) {
