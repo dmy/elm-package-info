@@ -81,9 +81,6 @@ function updatePackageInfo(pkg, elmJson) {
         // Install Header
         const installHeaderTitle = document.createElement("span");
         installHeaderTitle.textContent = "Install";
-        const installHeaderHint = document.createElement("span");
-        installHeaderHint.style.opacity = "0";
-        installHeaderHint.textContent = " copied";
 
         const installHeader = document.createElement("h2");
         const copyToClipboardIcon = createCopyToClipboardIcon();
