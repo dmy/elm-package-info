@@ -21,7 +21,9 @@ function addPackageInfo() {
 
 function updatePackageInfo(pkg, elmJson) {
     const info = document.getElementById("elm-package-info");
-    if (!info) { return };
+    if (!info) {
+        return
+    };
 
     info.style.display = "none";
     info.style.position = "absolute";
@@ -30,14 +32,14 @@ function updatePackageInfo(pkg, elmJson) {
 
     const dependencies = document.createElement("div");
     for (const [name, constraint] of Object.entries(elmJson.dependencies)) {
-        const dep = document.createElement("div");
-        dep.style.whiteSpace = "nowrap";
-
         const link = document.createElement("a");
         link.setAttribute("href", `/packages/${name}/latest`);
         link.textContent = name;
+
         const span = document.createElement("span");
         span.textContent = " " + constraint;
+
+        const dep = document.createElement("div");
         dep.appendChild(link);
         dep.appendChild(span);
         dependencies.appendChild(dep);
@@ -49,10 +51,8 @@ function updatePackageInfo(pkg, elmJson) {
     avatar.style.display = "block";
     avatar.setAttribute("width", "64");
     avatar.setAttribute("height", "64");
-    avatar.setAttribute("alt", `${pkg.author} GitHub profile`);
     const profile = document.createElement("a");
     profile.setAttribute("href", `https://github.com/${pkg.author}`);
-    profile.style.textAlign = "top";
     profile.appendChild(avatar);
     content.appendChild(profile);
 
@@ -83,10 +83,9 @@ function updatePackageInfo(pkg, elmJson) {
 
     const elmInstall = document.createElement("a");
     elmInstall.setAttribute("href", "https://guide.elm-lang.org/install.html");
-    elmInstall.setAttribute("alt", "Install Elm");
     elmInstall.textContent = "elm";
     const elmVersion = document.createElement("span");
-    elmVersion.textContent =  " " + elmJson["elm-version"];
+    elmVersion.textContent = " " + elmJson["elm-version"];
     const elm = document.createElement("div");
     elm.appendChild(elmInstall);
     elm.appendChild(elmVersion);
@@ -127,12 +126,35 @@ function updatePosition() {
         const rect = pkgNav.getBoundingClientRect();
         info.style.left = (rect.x).toString() + "px";
         info.style.top = (rect.y + rect.height).toString() + "px";
-        // Extend to right border to hide conflicts with the footer.
-        info.style.right = "0";
         info.style.display = "block";
+        translateFooter();
     } else if (info) {
         info.style.display = "none";
     }
+}
+
+function translateFooter() {
+    window.requestAnimationFrame(() => {
+        const info = document.getElementById("elm-package-info");
+        const footers = document.getElementsByClassName("footer");
+        if (info && footers && footers.length > 0) {
+            const footer = footers[0];
+            const footerRect = footer.getBoundingClientRect();
+            const infoRect = info.getBoundingClientRect();
+            const translateY = getTranslateY(footer);
+            const offset = Math.max(0, Math.round(infoRect.bottom - (footerRect.top - translateY) + 64));
+            footer.style.transform = "translateY(" + offset.toString() + "px)";
+        }
+    });
+}
+
+function getTranslateY(element) {
+    if (!element) {
+        return 0;
+    }
+    const style = window.getComputedStyle(element);
+    const matrix = new DOMMatrix(style.transform);
+    return matrix.m42;
 }
 
 function isNewPackage(oldPkg, newPkg) {
@@ -154,6 +176,13 @@ function isNewPackage(oldPkg, newPkg) {
     return false;
 }
 
+function resetFooterTranslation() {
+    const footers = document.getElementsByClassName("footer");
+    if (footers && footers.length > 0) {
+        footers[0].style.transform = null;
+    }
+}
+
 var pkg = getPackage();
 addPackageInfo();
 update(pkg);
@@ -168,6 +197,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
                 info.style.display = "none";
             }
         } else if (isNewPackage(pkg, newPkg)) {
+            resetFooterTranslation();
             update(newPkg);
             pkg = newPkg;
         }
