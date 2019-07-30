@@ -40,6 +40,7 @@ function updatePackageInfo(pkg, elmJson) {
         span.textContent = " " + constraint;
 
         const dep = document.createElement("div");
+        dep.style.whiteSpace = "nowrap";
         dep.appendChild(link);
         dep.appendChild(span);
         dependencies.appendChild(dep);
@@ -66,10 +67,12 @@ function updatePackageInfo(pkg, elmJson) {
     releaseDateLink.setAttribute("href", `https://github.com/${pkg.author}/${pkg.name}/releases`);
     releaseDateLink.textContent = elmJson.date;
     const releaseDate = document.createElement("div");
+    releaseDate.style.whiteSpace = "nowrap";
     releaseDate.appendChild(releaseDateLink);
     content.appendChild(releaseDate);
 
     const license = document.createElement("a");
+    license.style.whiteSpace = "nowrap"
     license.setAttribute("href",
         `https://raw.githubusercontent.com/${pkg.author}/${pkg.name}/${elmJson["version"]}/LICENSE`
     );
@@ -87,6 +90,7 @@ function updatePackageInfo(pkg, elmJson) {
     const elmVersion = document.createElement("span");
     elmVersion.textContent = " " + elmJson["elm-version"];
     const elm = document.createElement("div");
+    elm.style.whiteSpace = "nowrap"
     elm.appendChild(elmInstall);
     elm.appendChild(elmVersion);
 
