@@ -72,7 +72,7 @@ function updatePackageInfo(pkg, elmJson) {
     const license = document.createElement("a");
     license.style.whiteSpace = "nowrap"
     license.setAttribute("href",
-        `https://raw.githubusercontent.com/${pkg.author}/${pkg.name}/${elmJson["version"]}/LICENSE`
+        `https://github.com/${pkg.author}/${pkg.name}/blob/${elmJson["version"]}/LICENSE`
     );
     license.textContent = elmJson.license;
     content.appendChild(license);
