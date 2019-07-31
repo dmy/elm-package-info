@@ -77,20 +77,21 @@ function updatePackageInfo(pkg, elmJson) {
     license.textContent = elmJson.license;
     content.appendChild(license);
 
+    // Install Header
+    const installHeaderTitle = document.createElement("span");
+    installHeaderTitle.textContent = "Install";
+
+    const installHeader = document.createElement("h2");
+    const copyToClipboardIcon = createCopyToClipboardIcon();
+    installHeader.appendChild(installHeaderTitle);
+    installHeader.appendChild(copyToClipboardIcon);
+    content.appendChild(installHeader);
+
+    // Install Command
+    let installCommand;
     if (defaultPackages.indexOf(`${pkg.author}/${pkg.name}`) == -1) {
-        // Install Header
-        const installHeaderTitle = document.createElement("span");
-        installHeaderTitle.textContent = "Install";
-
-        const installHeader = document.createElement("h2");
         installHeader.style.marginBottom = "0";
-        const copyToClipboardIcon = createCopyToClipboardIcon();
-        installHeader.appendChild(installHeaderTitle);
-        installHeader.appendChild(copyToClipboardIcon);
-        content.appendChild(installHeader);
-
-        // Install Command
-        const installCommand = document.createElement("pre");
+        installCommand = document.createElement("pre");
         installCommand.onclick = () => copyToClipboard(installCommand, copyToClipboardIcon);
         installCommand.style.boxSizing = "content-box";
         installCommand.style.padding = "10px 4px"
@@ -101,10 +102,15 @@ function updatePackageInfo(pkg, elmJson) {
         } else {
             installCommand.textContent = `elm install ${pkg.author}/${pkg.name}`;
         }
-        const install = document.createElement("div");
-        install.appendChild(installCommand);
-        content.appendChild(install);
+    } else {
+        installHeader.style.marginBottom = "10px";
+        installCommand = document.createElement("span");
+        installCommand.style.whiteSpace = "nowrap";
+        installCommand.textContent = `${pkg.author}/${pkg.name} is installed by default`;
     }
+    const install = document.createElement("div");
+    install.appendChild(installCommand);
+    content.appendChild(install);
 
     // Dependencies Header
     const depsHeader = document.createElement("h2");
