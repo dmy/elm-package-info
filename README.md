@@ -6,7 +6,7 @@ Additional information includes:
 * author GitHub avatar
 * release date
 * license
-* install instructions with copy-to-clipboard on click
+* install command with copy-to-clipboard on click
 * `elm` version supported
 * package dependencies
 

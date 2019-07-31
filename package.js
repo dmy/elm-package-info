@@ -89,7 +89,7 @@ function updatePackageInfo(pkg, elmJson) {
         installHeader.appendChild(copyToClipboardIcon);
         content.appendChild(installHeader);
 
-        // Install Instruction
+        // Install Command
         const installCommand = document.createElement("pre");
         installCommand.onclick = () => copyToClipboard(installCommand, copyToClipboardIcon);
         installCommand.style.boxSizing = "content-box";
