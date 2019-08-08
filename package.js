@@ -1,12 +1,3 @@
-const defaultPackages = [
-    "elm/browser",
-    "elm/core",
-    "elm/html",
-    "elm-lang/core",
-    "elm-lang/html"
-];
-
-
 async function getElmJson(pkg) {
     const host = window.location.host;
     let url;
@@ -52,9 +43,38 @@ function updatePackageInfo(pkg, elmJson) {
     profile.appendChild(avatar);
     content.appendChild(profile);
 
+
+    // Install Header
+    const installHeaderTitle = document.createElement("span");
+    installHeaderTitle.textContent = "Install";
+    const copyToClipboardIcon = createCopyToClipboardIcon();
+    const installHeader = document.createElement("h2");
+    installHeader.style.marginTop = "14px";
+    installHeader.style.marginBottom = "0";
+    installHeader.appendChild(installHeaderTitle);
+    installHeader.appendChild(copyToClipboardIcon);
+    content.appendChild(installHeader);
+
+    // Install Command
+    let installCommand;
+    installCommand = document.createElement("pre");
+    installCommand.onclick = () => copyToClipboard(installCommand, copyToClipboardIcon);
+    installCommand.style.boxSizing = "content-box";
+    installCommand.style.padding = "10px 4px"
+    installCommand.style.margin = "10px 0"
+    installCommand.style.minWidth = "200px";
+    if (isOldFormat(elmJson)) {
+        installCommand.textContent = `elm-package install ${pkg.author}/${pkg.name}`;
+    } else {
+        installCommand.textContent = `elm install ${pkg.author}/${pkg.name}`;
+    }
+
+    const install = document.createElement("div");
+    install.appendChild(installCommand);
+    content.appendChild(install);
+
     // Release Header
     const releaseHeader = document.createElement("h2");
-    releaseHeader.style.marginTop = "14px";
     releaseHeader.style.marginBottom = "10px";
     releaseHeader.textContent = "Release";
     content.appendChild(releaseHeader);
@@ -76,41 +96,6 @@ function updatePackageInfo(pkg, elmJson) {
     );
     license.textContent = elmJson.license;
     content.appendChild(license);
-
-    // Install Header
-    const installHeaderTitle = document.createElement("span");
-    installHeaderTitle.textContent = "Install";
-
-    const installHeader = document.createElement("h2");
-    const copyToClipboardIcon = createCopyToClipboardIcon();
-    installHeader.appendChild(installHeaderTitle);
-    installHeader.appendChild(copyToClipboardIcon);
-    content.appendChild(installHeader);
-
-    // Install Command
-    let installCommand;
-    if (defaultPackages.indexOf(`${pkg.author}/${pkg.name}`) == -1) {
-        installHeader.style.marginBottom = "0";
-        installCommand = document.createElement("pre");
-        installCommand.onclick = () => copyToClipboard(installCommand, copyToClipboardIcon);
-        installCommand.style.boxSizing = "content-box";
-        installCommand.style.padding = "10px 4px"
-        installCommand.style.margin = "10px 0"
-        installCommand.style.minWidth = "200px";
-        if (isOldFormat(elmJson)) {
-            installCommand.textContent = `elm-package install ${pkg.author}/${pkg.name}`;
-        } else {
-            installCommand.textContent = `elm install ${pkg.author}/${pkg.name}`;
-        }
-    } else {
-        installHeader.style.marginBottom = "10px";
-        installCommand = document.createElement("span");
-        installCommand.style.whiteSpace = "nowrap";
-        installCommand.textContent = `${pkg.author}/${pkg.name} is installed by default`;
-    }
-    const install = document.createElement("div");
-    install.appendChild(installCommand);
-    content.appendChild(install);
 
     // Dependencies Header
     const depsHeader = document.createElement("h2");
