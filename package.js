@@ -133,10 +133,16 @@ function updatePackageInfo(pkg, elmJson) {
     }
     content.appendChild(dependencies);
 
-    while (info.firstChild) {
-        info.removeChild(info.firstChild);
-    }
+    removeChildren(info);
     info.appendChild(content);
+}
+
+function removeChildren(element) {
+    if (element) {
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
+        }
+    }
 }
 
 function createCopyToClipboardIcon() {
@@ -306,6 +312,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
             }
         } else if (packageChanged(pkg, newPkg)) {
             resetFooterTranslation();
+            removeChildren(info);
             update(newPkg);
             pkg = newPkg;
         }
