@@ -322,7 +322,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 // Update position on DOM changes
 const config = { attributes: true, childList: true, subtree: true };
 const observer = new MutationObserver((mutationList, observer) => {
-    updatePosition();
+    for (const mutation of mutationList) {
+        if (mutation.target.id !== "elm-package-info") {
+            updatePosition();
+            break;
+        }
+    }
 });
 observer.observe(document.body, config);
 
