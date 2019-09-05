@@ -233,6 +233,7 @@ function update(pkg) {
 }
 
 function updatePosition() {
+    bodyWidth = document.body.clientWidth;
     const info = document.getElementById("elm-package-info");
     const pkgNavs = document.getElementsByClassName("pkg-nav");
     if (info && pkgNavs && pkgNavs.length > 0) {
@@ -298,6 +299,7 @@ function resetFooterTranslation() {
 }
 
 var pkg = getPackage();
+var bodyWidth = document.body.clientWidth;
 addPackageInfo();
 update(pkg);
 
@@ -306,10 +308,8 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     if (request.message === "update") {
         const newPkg = getPackage();
         const info = document.getElementById("elm-package-info");
-        if (!newPkg) {
-            if (info) {
-                info.style.display = "none";
-            }
+        if (!newPkg && info) {
+            info.style.display = "none";
         } else if (packageChanged(pkg, newPkg)) {
             resetFooterTranslation();
             removeChildren(info);
@@ -323,7 +323,20 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 const config = { attributes: true, childList: true, subtree: true };
 const observer = new MutationObserver((mutationList, observer) => {
     for (const mutation of mutationList) {
-        if (mutation.target.id !== "elm-package-info") {
+        if (mutation.target.id === "elm-package-info") {
+            if (mutation.type === "childList") {
+                updatePosition();
+                break;
+            } else {
+                continue;
+            }
+        } else if (mutation.target.className === "pkg-nav") {
+            updatePosition();
+            break;
+        } else if (mutation.type === "childList") {
+            updatePosition();
+            break;
+        } else if (document.body.clientWidth !== bodyWidth) {
             updatePosition();
             break;
         }
